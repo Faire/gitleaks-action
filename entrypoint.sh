@@ -11,6 +11,10 @@ if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
   CONFIG=" --config-path=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH $CONFIG"
 fi
 
+# Assume the $GITHUB_WORKSPACE is a safe directory
+# https://github.blog/2022-04-12-git-security-vulnerability-announced/
+git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
 echo running gitleaks "$(gitleaks --version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
