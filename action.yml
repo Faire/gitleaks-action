@@ -8,6 +8,10 @@ inputs:
     description: 'Path to config (relative to $GITHUB_WORKSPACE)'
     required: false
     default: '.github/.gitleaks.toml'
+  log-opts:
+    description: 'Git log options to provide to gitleaks (--log-opts)'
+    required: false
+    default: ''
 outputs:
   result: # id of output
     description: 'Gitleaks log output'
@@ -17,4 +21,5 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.config-path }}
+    CONFIG_PATH: ${{ inputs.config-path }}
+    LOG_OPTS: ${{ inputs.log-opts }}
