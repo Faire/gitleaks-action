@@ -20,7 +20,6 @@ git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
 echo running gitleaks "$(gitleaks version) with the following command👇"
 echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG $LOG_OPTS
-echo "\n\n\n"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
@@ -28,7 +27,7 @@ CAPTURE_OUTPUT=$(gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $
 
 EXIT_CODE=$?
 
-if [ $? -eq 1 ]
+if [ $EXIT_CODE -ne 0 ]
 then
   GITLEAKS_RESULT=$(echo -e "\e[31m🛑 STOP! Gitleaks encountered leaks")
   echo "$GITLEAKS_RESULT"
@@ -38,7 +37,7 @@ then
   echo "::set-output name=result::$CAPTURE_OUTPUT"
   echo "----------------------------------"
   echo -e $DONATE_MSG
-  exit 1
+  exit $EXIT_CODE
 else
   GITLEAKS_RESULT=$(echo -e "\e[32m✅ SUCCESS! Your code is good to go!")
   echo "$GITLEAKS_RESULT"
