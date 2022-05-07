@@ -21,4 +21,4 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    ${{ inputs.config-path }} ${{ inputs.log-opts }}
+    - ${{ inputs.config-path }} ${{ inputs.log-opts }}
