@@ -15,10 +15,6 @@ echo running gitleaks "$(gitleaks --version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-# Since actions/checkout can be setup with a different user ID, we need to set the workspace as safe inside this action
-# Info about the vunlerability: https://github.blog/2022-04-12-git-security-vulnerability-announced/
-git config --global --add safe.directory "$GITHUB_WORKSPACE"
-
 if [ "$GITHUB_EVENT_NAME" = "push" ]
 then
   echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG
