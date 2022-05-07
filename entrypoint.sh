@@ -4,9 +4,7 @@ INPUT_CONFIG_PATH="$1"
 INPUT_LOG_OPTS="$2"
 CONFIG=""
 
-if [ "$INPUT_LOG_OPTS" -ne "" ]; then
-  CONFIG=" --log-opts=$INPUT_LOG_OPTS"
-fi
+CONFIG=" --log-opts=$INPUT_LOG_OPTS"
 
 # check if a custom config have been provided
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
@@ -17,7 +15,9 @@ echo running gitleaks "$(gitleaks --version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-sudo git config --global --add safe.directory $GITHUB_WORKSPACE
+# Since actions/checkout can be setup with a different user ID, we need to set the workspace as safe inside this action
+# Info about the vunlerability: https://github.blog/2022-04-12-git-security-vulnerability-announced/
+git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
 if [ "$GITHUB_EVENT_NAME" = "push" ]
 then
