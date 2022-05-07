@@ -5,7 +5,7 @@ INPUT_LOG_OPTS="$2"
 CONFIG=""
 LOG_OPTS=""
 
-if [ "$GITHUB_EVENT_NAME" = "pull_request" && INPUT_LOG_OPTS != "" ]; then
+if [ "$GITHUB_EVENT_NAME" = "pull_request" ] && [ $INPUT_LOG_OPTS != "" ]; then
   LOG_OPTS=" $INPUT_LOG_OPTS"
 fi
 
