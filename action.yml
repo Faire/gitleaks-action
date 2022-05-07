@@ -8,10 +8,6 @@ inputs:
     description: 'Path to config (relative to $GITHUB_WORKSPACE)'
     required: false
     default: '.github/.gitleaks.toml'
-  log-opts:
-    description: 'Git log options to provide to gitleaks (--log-opts)'
-    required: false
-    default: '--full-history --simplify-merges --show-pulls --all'
 outputs:
   result: # id of output
     description: 'Gitleaks log output'
@@ -21,4 +17,4 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.config-path }} ${{ inputs.log-opts }}
+    - ${{ inputs.config-path }}

@@ -1,11 +1,10 @@
 #!/bin/bash
 
 INPUT_CONFIG_PATH="$1"
-INPUT_LOG_OPTS="$2"
 CONFIG=""
 
-if [ "$INPUT_CONFIG_PATH" -ne "" ]; then
-  CONFIG=" --log-opts=$INPUT_LOG_OPTS"
+if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+  CONFIG=" --log-opts=\"--full-history --simplify-merges --show-pulls --all $GITHUB_BASE_REF..$GITHUB_REF\""
 fi
 
 # check if a custom config have been provided
