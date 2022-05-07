@@ -9,7 +9,7 @@ fi
 
 # check if a custom config have been provided
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
-  CONFIG=" --config-path=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH $CONFIG"
+  CONFIG=" --config=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH $CONFIG"
 fi
 
 # Assume the $GITHUB_WORKSPACE is a safe directory
