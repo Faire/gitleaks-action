@@ -5,11 +5,14 @@ INPUT_LOG_OPTS="$2"
 CONFIG=""
 LOG_OPTS=""
 
+echo log opts: $INPUT_LOG_OPTS
+echo config path: $INPUT_CONFIG_PATH
+
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ] && [ ! -z "$INPUT_LOG_OPTS" ]; then
   LOG_OPTS=" $INPUT_LOG_OPTS"
 fi
 
-# check if a custom config have been provided
+# check if a custom config have been provided 
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
   CONFIG=" --config=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
 fi
