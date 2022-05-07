@@ -20,6 +20,5 @@ outputs:
 runs:
   using: "docker"
   image: "Dockerfile"
-  env:
-    - CONFIG_PATH: ${{ inputs.config-path }}
-    - LOG_OPTS: ${{ inputs.log-opts }}
+  args:
+    ${{ inputs.config-path }} ${{ inputs.log-opts }}

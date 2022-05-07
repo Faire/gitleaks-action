@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INPUT_CONFIG_PATH="$CONFIG_PATH"
-INPUT_LOG_OPTS="$LOG_OPTS"
+INPUT_CONFIG_PATH="$1"
+INPUT_LOG_OPTS="$2"
 CONFIG=""
 
 if [ "$INPUT_LOG_OPTS" -ne "" ]; then
