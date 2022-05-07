@@ -6,7 +6,7 @@ LABEL "com.github.actions.icon"="shield"
 LABEL "com.github.actions.color"="purple"
 LABEL "repository"="https://github.com/zricethezav/gitleaks-action"
 
-RUN git config --global --add safe.directory 
+RUN git config --global --add safe.directory /github/workspace
 
 ADD entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
