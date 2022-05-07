@@ -2,14 +2,15 @@
 
 INPUT_CONFIG_PATH="$1"
 CONFIG=""
+LOG_OPTS=""
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-  CONFIG=" --log-opts=\"--full-history --simplify-merges --show-pulls --all $GITHUB_BASE_REF..$GITHUB_REF\""
+  LOG_OPTS=" --log-opts=\"--full-history --simplify-merges --show-pulls --all $GITHUB_BASE_REF..$GITHUB_REF\""
 fi
 
 # check if a custom config have been provided
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
-  CONFIG=" --config=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH $CONFIG"
+  CONFIG=" --config=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
 fi
 
 # Assume the $GITHUB_WORKSPACE is a safe directory
@@ -17,18 +18,12 @@ fi
 git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
 echo running gitleaks "$(gitleaks version) with the following command👇"
+echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG $LOG_OPTS
+echo "\n\n\n"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-if [ "$GITHUB_EVENT_NAME" = "push" ]
-then
-  echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG
-  CAPTURE_OUTPUT=$(gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG)
-elif [ "$GITHUB_EVENT_NAME" = "pull_request" ]
-then 
-  echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG
-  CAPTURE_OUTPUT=$(gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG)
-fi
+CAPTURE_OUTPUT=$(gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG $LOG_OPTS)
 
 EXIT_CODE=$?
 
