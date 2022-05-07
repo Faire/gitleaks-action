@@ -4,7 +4,9 @@ INPUT_CONFIG_PATH="$1"
 INPUT_LOG_OPTS="$2"
 CONFIG=""
 
-CONFIG=" --log-opts=$INPUT_LOG_OPTS"
+if [ "$INPUT_CONFIG_PATH" -ne "" ]; then
+  CONFIG=" --log-opts=$INPUT_LOG_OPTS"
+fi
 
 # check if a custom config have been provided
 if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
@@ -15,7 +17,7 @@ fi
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
 git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
-echo running gitleaks "$(gitleaks --version) with the following command👇"
+echo running gitleaks "$(gitleaks version) with the following command👇"
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 

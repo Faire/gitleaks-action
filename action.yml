@@ -11,7 +11,7 @@ inputs:
   log-opts:
     description: 'Git log options to provide to gitleaks (--log-opts)'
     required: false
-    default: ''
+    default: '--full-history --simplify-merges --show-pulls --all'
 outputs:
   result: # id of output
     description: 'Gitleaks log output'
