@@ -12,7 +12,7 @@ echo log opts: $INPUT_LOG_OPTS
 echo config path: $INPUT_CONFIG_PATH
 
 if [ "$GITHUB_EVENT_NAME" = "pull_request" ] && [ ! -z "$INPUT_LOG_OPTS" ]; then
-  LOG_OPTS=" --log-opts=\"--simplify-merges $INPUT_LOG_OPTS\""
+  LOG_OPTS=" --log-opts=$INPUT_LOG_OPTS"
 fi
 
 # check if a custom config have been provided 
