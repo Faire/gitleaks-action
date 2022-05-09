@@ -12,6 +12,10 @@ inputs:
     description: 'Git log options to provide to gitleaks (--log-opts)'
     required: false
     default: ''
+  working-directory:
+    description: 'Working Directory'
+    required: false
+    default: '.'
 outputs:
   result: # id of output
     description: 'Gitleaks log output'
@@ -23,3 +27,4 @@ runs:
   args:
     - ${{ inputs.config-path }}
     - ${{ inputs.log-opts }}
+    - ${{ inputs.working-directory }}

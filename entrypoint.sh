@@ -2,8 +2,12 @@
 
 INPUT_CONFIG_PATH="$1"
 INPUT_LOG_OPTS="$2"
+INPUT_WORKING_DIRECTORY="$3"
 CONFIG=""
 LOG_OPTS=""
+
+WORKING_DIRECTORY="$GITHUB_WORKSPACE/$INPUT_WORKING_DIRECTORY"
+cd WORKING_DIRECTORY
 
 echo log opts: $INPUT_LOG_OPTS
 echo config path: $INPUT_CONFIG_PATH
@@ -13,20 +17,20 @@ if [ "$GITHUB_EVENT_NAME" = "pull_request" ] && [ ! -z "$INPUT_LOG_OPTS" ]; then
 fi
 
 # check if a custom config have been provided 
-if [ -f "$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH" ]; then
-  CONFIG=" --config=$GITHUB_WORKSPACE/$INPUT_CONFIG_PATH"
+if [ -f "$WORKING_DIRECTORY/$INPUT_CONFIG_PATH" ]; then
+  CONFIG=" --config=$WORKING_DIRECTORY/$INPUT_CONFIG_PATH"
 fi
 
 # Assume the $GITHUB_WORKSPACE is a safe directory
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
-git config --global --add safe.directory "$GITHUB_WORKSPACE"
+git config --global --add safe.directory "$WORKING_DIRECTORY"
 
 echo running gitleaks "$(gitleaks version) with the following command👇"
-echo gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG $LOG_OPTS
+echo gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $CONFIG $LOG_OPTS
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-CAPTURE_OUTPUT=$(gitleaks detect --source=$GITHUB_WORKSPACE --verbose --redact $CONFIG $LOG_OPTS)
+CAPTURE_OUTPUT=$(gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $CONFIG $LOG_OPTS)
 
 EXIT_CODE=$?
 
