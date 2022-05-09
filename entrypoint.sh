@@ -26,11 +26,11 @@ git config --global --add safe.directory "$WORKING_DIRECTORY"
 git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
 echo running gitleaks "$(gitleaks version) with the following command👇"
-echo gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $CONFIG $LOG_OPTS
+echo gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $LOG_OPTS $CONFIG
 
 DONATE_MSG="👋 maintaining gitleaks takes a lot of work so consider sponsoring me or donating a little something\n\e[36mhttps://github.com/sponsors/zricethezav\n\e[36mhttps://www.paypal.me/zricethezav\n"
 
-CAPTURE_OUTPUT=$(gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $CONFIG $LOG_OPTS)
+CAPTURE_OUTPUT=$(gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $LOG_OPTS $CONFIG )
 
 EXIT_CODE=$?
 
