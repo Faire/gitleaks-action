@@ -7,7 +7,6 @@ CONFIG=""
 LOG_OPTS=""
 
 WORKING_DIRECTORY="$GITHUB_WORKSPACE/$INPUT_WORKING_DIRECTORY"
-cd WORKING_DIRECTORY
 
 echo log opts: $INPUT_LOG_OPTS
 echo config path: $INPUT_CONFIG_PATH
@@ -24,6 +23,7 @@ fi
 # Assume the $GITHUB_WORKSPACE is a safe directory
 # https://github.blog/2022-04-12-git-security-vulnerability-announced/
 git config --global --add safe.directory "$WORKING_DIRECTORY"
+git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
 echo running gitleaks "$(gitleaks version) with the following command👇"
 echo gitleaks detect --source=$WORKING_DIRECTORY --verbose --redact $CONFIG $LOG_OPTS
