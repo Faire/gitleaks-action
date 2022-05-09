@@ -43,7 +43,7 @@ then
   echo "$CAPTURE_OUTPUT"
   echo "::set-output name=result::$CAPTURE_OUTPUT"
   echo "GITLEAKS_RESULT<<EOF" >> $GITHUB_ENV
-  echo "$CAPTURE_OUTPUT" >> $GITHUB_ENV
+  echo "$CAPTURE_OUTPUT" | sed 's/`//g' >> $GITHUB_ENV
   echo "EOF" >> $GITHUB_ENV
   echo "----------------------------------"
   echo -e $DONATE_MSG
